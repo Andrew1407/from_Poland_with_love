@@ -1,3 +1,5 @@
+from Memoizator import Memoizator
+
 operationsPriorities = {
   "(": 0,
   "+": 1,
@@ -10,24 +12,43 @@ operationsPriorities = {
 class PolishNotation:
   # [CONTRUCTOR]
   def __init__(self):
+    self.__memoizator = Memoizator()
     self.__result = list()
     self.__operationsStack = list()
     self.__inputList = list()
 
   
-  ## main calculations
-  def interpret(self, inputStr, intepretation = "toPolish"):
-    self.__cleanLists()
-    if intepretation == "toPolish":
-      self.__set_inputList_toPolish(inputStr)
-      self.__toPolishNotation()
-    elif intepretation == "fromPolish":
-      self.__set_inputList_fromPolish(inputStr)
-      self.__fromPolishNotation()
+  # [INTERPRETATION]
+  def interpret(self, inputStr, interpretation = "toPolish"):
+    self.__set_inputList(inputStr, interpretation)
+    memoized = self.__memoizator.memoized(inputStr, self.__inputList)
+    if memoized:
+      return memoized
+    self.__calculate(interpretation)
+    valuesQuantity = len(self.__inputList) - len(self.__operationsStack)
+    self.__memoizator.addExpression(self.__inputList, self.__result, valuesQuantity)
     return self.__getResult()
 
 
-  ## fills {__inputList} decomposing {inputStr}
+  ## applies appropriate input decomposition
+  def __set_inputList(self, inputStr, interpretation):
+    self.__cleanLists()
+    if interpretation == "toPolish":
+      self.__set_inputList_toPolish(inputStr)
+    elif interpretation == "fromPolish":
+      self.__set_inputList_fromPolish(inputStr)
+
+
+  ## main calculations
+  def __calculate(self, interpretation):
+    if interpretation == "toPolish":
+      self.__toPolishNotation()
+    elif interpretation == "fromPolish":
+      self.__fromPolishNotation()
+      self.__result = self.__result[0].split(" ")
+
+
+  ## fills { __inputList } decomposing {inputStr}
   def __set_inputList_toPolish(self, inputStr):
     inputList = inputStr.split(" ")
     # print(inputList)
