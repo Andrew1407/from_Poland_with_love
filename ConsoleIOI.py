@@ -2,6 +2,7 @@ from Interpreter import PolishNotation
 from WindowIOI import WindowIOI
 
 class ConsoleIOI:
+  __interpreter = PolishNotation()
   __commands = {
     "exit": [".q", ".exit", ".quit", ".ex"],
     "help": [".h", ".help"],
@@ -67,7 +68,8 @@ class ConsoleIOI:
 
 
   def __calculate(self, _input):
-    result = PolishNotation(_input, self.__mode)
+    interpreter = self.__interpreter
+    result = interpreter.interpret(_input, self.__mode)
     print("###############")
     print("Output result: ", result)
     print("###############")

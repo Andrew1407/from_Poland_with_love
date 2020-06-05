@@ -8,12 +8,15 @@ operationsPriorities = {
 }
 
 class PolishNotation:
-  __result = list()
-  __operationsStack = list()
-  __inputList = list()
-
   # [CONTRUCTOR]
-  def __init__(self, inputStr, intepretation = "toPolish"):
+  def __init__(self):
+    self.__result = list()
+    self.__operationsStack = list()
+    self.__inputList = list()
+
+  
+  ## main calculations
+  def interpret(self, inputStr, intepretation = "toPolish"):
     self.__cleanLists()
     if intepretation == "toPolish":
       self.__set_inputList_toPolish(inputStr)
@@ -21,6 +24,7 @@ class PolishNotation:
     elif intepretation == "fromPolish":
       self.__set_inputList_fromPolish(inputStr)
       self.__fromPolishNotation()
+    return self.__getResult()
 
 
   ## fills {__inputList} decomposing {inputStr}
@@ -176,11 +180,6 @@ class PolishNotation:
 
 
   # [FINAL RESULT GETTER]
-  def getResult(self):
+  def __getResult(self):
     result = " ".join(self.__result)
     return result
-
-
-  # [GET FINAL RESULT] (string format for { self })
-  def __str__(self):
-    return self.getResult()

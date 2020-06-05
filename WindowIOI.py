@@ -2,6 +2,8 @@ from tkinter import *
 from Interpreter import PolishNotation
 
 class WindowIOI:
+  __interpreter = PolishNotation()
+
   def launch(self):
     self.__root = Tk()
     self.__root.title("FROM POLAND WITH LOVE")
@@ -13,7 +15,7 @@ class WindowIOI:
     self.__inputField()
     self.__outputLabel()
     self.__outputBtn()
-    #launvh loop
+    #launch loop
     self.__root.mainloop()
 
 
@@ -46,12 +48,13 @@ class WindowIOI:
 
 
   def __outputBtn(self):
-    convertBtn = Button(text="Interprete", bg="black", fg="aqua", font=("arial", 20), command=self.__onClick)
+    convertBtn = Button(text="Interpret", bg="black", fg="aqua", font=("arial", 20), command=self.__onClick)
     convertBtn.place(relx=.7, rely=.2, anchor="c")
     convertBtn.config(height=1, width=7)
 
   #button callback
   def __onClick(self):
     #calculating result
-    result = PolishNotation(self.__message.get(), self.__variable.get())
+    interpreter = self.__interpreter
+    result = interpreter.interpret(self.__message.get(), self.__variable.get())
     self.__outResult.set(f"  Output result:\t{result}")
