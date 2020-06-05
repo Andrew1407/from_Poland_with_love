@@ -13,7 +13,7 @@ class Memoizator:
     for reg in self.__patternsMemoized:
       if re.match(reg, inputStr):
         pattern = self.__patternsMemoized[reg]
-        return pattern.format(*inputListValues) + "\t\tⓜ"
+        return pattern.format(*inputListValues) #+ "\t\tⓜ"
     return None
 
 
@@ -26,7 +26,6 @@ class Memoizator:
     resultRegex = self.__join(mapperRegex(resultStr)).format(*valuesRegex)
     self.__patternsMemoized[f"^{inputRegex}$"] = self.__join(resultStr)
     self.__patternsMemoized[f"^{resultRegex}$"] = self.__join(inputStr)
-    print(self.__patternsMemoized)
 
 
   ## searches values in expresson list
