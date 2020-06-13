@@ -57,6 +57,7 @@ class Memoizator:
         result.append(x)
     return "".join(result)
 
+  
   ## counts quantity of values in example
   def __countValues(self, arr):
     counter = 0
