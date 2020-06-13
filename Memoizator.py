@@ -15,7 +15,7 @@ class Memoizator:
     for reg in self.__patternsMemoized:
       if re.match(reg, inputStr):
         pattern = self.__patternsMemoized[reg]
-        return pattern.format(*inputListValues) + "\t\tⓜ"
+        return pattern.format(*inputListValues) #+ "\t\tⓜ"
     return None
 
 
