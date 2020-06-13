@@ -25,8 +25,7 @@ class PolishNotation:
     if memoized:
       return memoized
     self.__calculate(interpretation)
-    valuesQuantity = len(self.__inputList) - len(self.__operationsStack)
-    self.__memoizator.addExpression(self.__inputList, self.__result, valuesQuantity)
+    self.__memoizator.addExpression(self.__inputList, self.__result)
     return self.__getResult()
 
 

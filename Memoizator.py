@@ -2,6 +2,7 @@ import re
 
 mapperStr = lambda arr: [x if re.match(r"^[-/\*\^\+)(]{1}$", x) else "{}" for x in arr]
 mapperRegex = lambda arr: [f"\{x}" if re.match(r"[)(\*\^\+]", x) else x for x in arr]
+isOperation = lambda x: True if re.match(r"^[-/\*\^\+)(]{1}$", x) else False
 
 
 class Memoizator:
@@ -18,9 +19,10 @@ class Memoizator:
 
 
   ## inserts new patterns of input and result into { __patternsMemoized }
-  def addExpression(self, _input, _result, valuesQuantity):
+  def addExpression(self, _input, _result):
     inputStr = mapperStr(self.__format(_input))
     resultStr = mapperStr(self.__format(_result))
+    valuesQuantity = self.__countValues(_input)
     valuesRegex = ["\(?[-\w]+\)?" for x in range(valuesQuantity)]
     inputRegex = self.__join(mapperRegex(inputStr)).format(*valuesRegex)
     resultRegex = self.__join(mapperRegex(resultStr)).format(*valuesRegex)
@@ -49,8 +51,16 @@ class Memoizator:
       return " ".join(arr)
     result = list()
     for x in arr:
-      if re.match(r"^(-|/|\\\\\*|\\\\\^|\\\\\+|\+|\^|\*)$", x):
+      if re.match(r"^(-|/|\\\*|\\\^|\\\+|\+|\^|\*)$", x):
         result += [" ", x, " "]
       else:
         result.append(x)
     return "".join(result)
+
+  ## counts quantity of values in example
+  def __countValues(self, arr):
+    counter = 0
+    for x in arr:
+      if not isOperation(x):
+        counter += 1
+    return counter
