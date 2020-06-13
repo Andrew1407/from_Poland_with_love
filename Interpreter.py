@@ -36,6 +36,7 @@ class PolishNotation:
       self.__set_inputList_toPolish(inputStr)
     elif interpretation == "fromPolish":
       self.__set_inputList_fromPolish(inputStr)
+    self.__inputList = [x for x in self.__inputList if x]
 
 
   ## main calculations

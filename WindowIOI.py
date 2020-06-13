@@ -6,6 +6,7 @@ class WindowIOI:
 
   def launch(self):
     self.__root = Tk()
+    self.__root.resizable(False, False)
     self.__root.title("FROM POLAND WITH LOVE")
     self.__root.geometry("1000x250+400+300")
     self.__root.config(bg = "black")

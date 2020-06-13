@@ -8,7 +8,7 @@ class ConsoleIOI:
     "help": [".h", ".help"],
     "interprete to Polish notation": [".tp", ".toPolish"],
     "interprete from Polish notation": [".fp", ".fromPolish"],
-    "open window mode": [".wnd", ".w", ".window"]
+    "window mode": [".w", ".wnd", ".window"]
   }
 
   def launch(self):
@@ -37,7 +37,7 @@ class ConsoleIOI:
 
       
   def __isWindowMode(self, _input):
-    if not self.__findCommand(_input, "open window mode"):
+    if not self.__findCommand(_input, "window mode"):
       return False
     WindowIOI().launch()
     return True

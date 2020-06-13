@@ -1,48 +1,32 @@
 import re
 
-mapperStr = lambda arr: [x if re.match(r"^[-/\*\^\+)(]{1}$", x) else "{}" for x in arr]
+isOperation = lambda x: re.match(r"^[-/\*\^\+)(]{1}$", x)
+mapperStr = lambda arr: [x if isOperation(x) else "{}" for x in arr]
 mapperRegex = lambda arr: [f"\{x}" if re.match(r"[)(\*\^\+]", x) else x for x in arr]
-isOperation = lambda x: True if re.match(r"^[-/\*\^\+)(]{1}$", x) else False
-
+filtrator = lambda x: not isOperation(x)
+filterValues = lambda arr: list(filter(filtrator, arr))
 
 class Memoizator:
   __patternsMemoized = dict()
 
   ## searches appropriate value in { __patternsMemoized }
   def memoized(self, inputStr, inputList):
-    inputListValues = self.__filterValues(inputList)
+    inputListValues = filterValues(inputList)
     for reg in self.__patternsMemoized:
       if re.match(reg, inputStr):
         pattern = self.__patternsMemoized[reg]
-        return pattern.format(*inputListValues) #+ "\t\tⓜ"
+        return pattern.format(*inputListValues) + "\t\tⓜ"
     return None
 
 
   ## inserts new patterns of input and result into { __patternsMemoized }
   def addExpression(self, _input, _result):
-    inputStr = mapperStr(self.__format(_input))
-    resultStr = mapperStr(self.__format(_result))
     valuesQuantity = self.__countValues(_input)
     valuesRegex = ["\(?[-\w]+\)?" for x in range(valuesQuantity)]
-    inputRegex = self.__join(mapperRegex(inputStr)).format(*valuesRegex)
-    resultRegex = self.__join(mapperRegex(resultStr)).format(*valuesRegex)
+    (inputStr, inputRegex) = self.__generateKeyValue(_input, valuesRegex)
+    (resultStr, resultRegex) = self.__generateKeyValue(_result, valuesRegex)
     self.__patternsMemoized[f"^{inputRegex}$"] = self.__join(resultStr)
     self.__patternsMemoized[f"^{resultRegex}$"] = self.__join(inputStr)
-
-
-  ## searches values in expresson list
-  def __filterValues(self, example): 
-    filtrator = lambda x: not re.match(r"^[-/\*\^\+)(]{1}$", x)
-    filtered = filter(filtrator, example)
-    return list(filtered)
-
-
-  ## removes spaces between brackets
-  def __format(self, arr):
-    for x in arr:
-      if "(" in x:
-        return [x for x in "".join(arr)]
-    return arr
 
 
   ## join array elements formating them
@@ -65,3 +49,9 @@ class Memoizator:
       if not isOperation(x):
         counter += 1
     return counter
+
+  ## returns tuple of key and value of { val } for { __patternsMemoized }
+  def __generateKeyValue(self, val, valuesRegex):
+    valStr = mapperStr(val)
+    valRegex = self.__join(mapperRegex(valStr)).format(*valuesRegex)
+    return (valStr, valRegex)
