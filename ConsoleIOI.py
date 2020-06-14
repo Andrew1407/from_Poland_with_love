@@ -1,5 +1,7 @@
 from Interpreter import PolishNotation
 from WindowIOI import WindowIOI
+from os import system
+from pyperclip import copy as copyToClipboard
 
 class ConsoleIOI:
   __interpreter = PolishNotation()
@@ -8,7 +10,8 @@ class ConsoleIOI:
     "help": [".h", ".help"],
     "interprete to Polish notation": [".tp", ".toPolish"],
     "interprete from Polish notation": [".fp", ".fromPolish"],
-    "window mode": [".w", ".wnd", ".window"]
+    "window mode": [".w", ".wnd", ".window"],
+    "clear": [".cl", ".clr", ".clear"]
   }
 
   def launch(self):
@@ -28,6 +31,8 @@ class ConsoleIOI:
       if self.__showHelpList(_input):
         continue
       if self.__setMode(_input):
+        continue
+      if self.__clear(_input):
         continue
       self.__calculate(_input)
 
@@ -53,6 +58,7 @@ class ConsoleIOI:
     print("\nCommands:")
     for x in self.__commands:
       print(f"{x}: {', '.join(self.__commands[x])}")
+    print()
     return True
 
 
@@ -70,6 +76,15 @@ class ConsoleIOI:
   def __calculate(self, _input):
     interpreter = self.__interpreter
     result = interpreter.interpret(_input, self.__mode)
+    copyToClipboard(result)
     print("###############")
     print("Output result: ", result)
     print("###############")
+
+
+  def __clear(self, _input):
+    if not self.__findCommand(_input, "clear"):
+      return False
+    system("clear")
+    return True
+

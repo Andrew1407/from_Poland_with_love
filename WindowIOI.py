@@ -1,5 +1,6 @@
 from tkinter import *
 from Interpreter import PolishNotation
+from pyperclip import copy as copyToClipboard
 
 class WindowIOI:
   __interpreter = PolishNotation()
@@ -58,4 +59,5 @@ class WindowIOI:
     #calculating result
     interpreter = self.__interpreter
     result = interpreter.interpret(self.__message.get(), self.__variable.get())
+    copyToClipboard(result)
     self.__outResult.set(f"  Output result:\t{result}")

@@ -21,11 +21,11 @@ class PolishNotation:
   # [INTERPRETATION]
   def interpret(self, inputStr, interpretation = "toPolish"):
     self.__set_inputList(inputStr, interpretation)
-    memoized = self.__memoizator.memoized(inputStr, self.__inputList)
+    memoized = self.__memoizator.memoized(inputStr, self.__inputList, interpretation)
     if memoized:
       return memoized
     self.__calculate(interpretation)
-    self.__memoizator.addExpression(self.__inputList, self.__result)
+    self.__memoizator.addExpression(self.__inputList, self.__result, interpretation)
     return self.__getResult()
 
 
