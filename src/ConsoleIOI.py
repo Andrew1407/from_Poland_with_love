@@ -11,7 +11,7 @@ class ConsoleIOI:
     "interprete to Polish notation": [".tp", ".toPolish"],
     "interprete from Polish notation": [".fp", ".fromPolish"],
     "window mode": [".w", ".wnd", ".window"],
-    "clear": [".cl", ".clr", ".clear"]
+    "clear": [".cl", ".clr", ".cls", ".clear"]
   }
 
   def launch(self):
