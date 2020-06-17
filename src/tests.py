@@ -43,7 +43,7 @@ timerCmp("(a4 - b5 ^ (-5t)) * (36 / 80)")
 print("interpreted from Poish (previous)")
 timerCmp("a b -5t ^ - 3 80 / *")
 
-print("test 2.1:")
+print("test 2.2:")
 timerCmp("a + b")
 print("interpreted from Poish (previous)")
 timerCmp("aa ccc +")
