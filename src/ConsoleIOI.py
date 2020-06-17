@@ -1,6 +1,7 @@
 from Interpreter import PolishNotation
 from WindowIOI import WindowIOI
 from os import system
+from platform import system as getNameOS
 import pyperclip
 
 class ConsoleIOI:
@@ -88,7 +89,11 @@ class ConsoleIOI:
   def __clear(self, _input):
     if not self.__findCommand(_input, "clear"):
       return False
-    system("clear")
+    nameOS = getNameOS()
+    if nameOS == "Windows":
+      system("cls")
+    elif nameOS == "Linux":
+      system("clear")
     return True
 
 
@@ -96,5 +101,6 @@ class ConsoleIOI:
     if not self.__findCommand(_input, "paste example from clipboard"):
       return False
     example = pyperclip.paste()
+    print("Pasted from clipboard: ", example)
     self.__calculate(example)
     return True
