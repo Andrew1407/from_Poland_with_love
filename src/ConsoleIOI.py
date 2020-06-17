@@ -1,7 +1,7 @@
 from Interpreter import PolishNotation
 from WindowIOI import WindowIOI
 from os import system
-from pyperclip import copy as copyToClipboard
+import pyperclip
 
 class ConsoleIOI:
   __interpreter = PolishNotation()
@@ -10,14 +10,15 @@ class ConsoleIOI:
     "help": [".h", ".help"],
     "interprete to Polish notation": [".tp", ".toPolish"],
     "interprete from Polish notation": [".fp", ".fromPolish"],
-    "window mode": [".w", ".wnd", ".window"],
-    "clear": [".cl", ".clr", ".cls", ".clear"]
+    "paste example from clipboard": [".c", ".p", ".cp"],
+    "clear": [".cl", ".clr", ".cls", ".clear"],
+    "window mode": [".w", ".wnd", ".window"]
   }
 
   def launch(self):
     self.__mode = "toPolish"
     print("Default interpretation: to Polish notation")
-    print("Help (commands): .h")
+    print("Help (commands): .h (.help)")
     self.__mainLoop()
 
 
@@ -33,6 +34,8 @@ class ConsoleIOI:
       if self.__setMode(_input):
         continue
       if self.__clear(_input):
+        continue
+      if self.__clipboardPaste(_input):
         continue
       self.__calculate(_input)
 
@@ -76,7 +79,7 @@ class ConsoleIOI:
   def __calculate(self, _input):
     interpreter = self.__interpreter
     result = interpreter.interpret(_input, self.__mode)
-    copyToClipboard(result)
+    pyperclip.copy(result)
     print("###############")
     print("Output result: ", result)
     print("###############")
@@ -88,3 +91,10 @@ class ConsoleIOI:
     system("clear")
     return True
 
+
+  def  __clipboardPaste(self, _input):
+    if not self.__findCommand(_input, "paste example from clipboard"):
+      return False
+    example = pyperclip.paste()
+    self.__calculate(example)
+    return True
