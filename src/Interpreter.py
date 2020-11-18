@@ -136,13 +136,8 @@ class PolishNotation:
     optPriorityPrev = operationsPriorities[optPrev]
     #brackets wrapping
     if optPriority > optPriorityPrev:
-      if self.__hasOperation(op2):
-        op2 = f"({op2})"
-      else:
-        op1 = f"({op1})"
-    elif optPriority == 3 and \
-      optPriorityPrev == 3:
-      if self.__hasOperation(op2):
+      if self.__hasOperation(op2) or \
+       optPriority == 3 and optPriorityPrev == 3:
         op2 = f"({op2})"
       else:
         op1 = f"({op1})"
