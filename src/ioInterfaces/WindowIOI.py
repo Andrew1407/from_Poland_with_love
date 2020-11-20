@@ -1,5 +1,5 @@
 from tkinter import *
-from Interpreter import PolishNotation
+from interpreter import PolishNotation
 import pyperclip
 
 class WindowIOI:

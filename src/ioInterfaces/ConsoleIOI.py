@@ -1,5 +1,5 @@
-from Interpreter import PolishNotation
-from WindowIOI import WindowIOI
+from interpreter import PolishNotation
+from .WindowIOI import WindowIOI
 from os import system
 from platform import system as getNameOS
 import pyperclip

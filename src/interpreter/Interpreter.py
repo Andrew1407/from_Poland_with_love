@@ -1,4 +1,4 @@
-from Memoizator import Memoizator
+from .Memoizator import Memoizator
 
 operationsPriorities = {
   "(": 0,
