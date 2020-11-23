@@ -6,7 +6,7 @@ appModes = dict(
   window = WindowIOI
 )
 
-# [LUANCHING]
+# [LAUNCHING]
 if len(argv) > 1:
   mode = argv[1]
   appModes[mode]().launch()
