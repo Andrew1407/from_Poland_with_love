@@ -1,5 +1,5 @@
 from sys import argv
-from ioInterfaces import ConsoleIOI, WindowIOI
+from ioInterfaces import *
 
 appModes = dict(
   console = ConsoleIOI,
