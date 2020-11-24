@@ -71,3 +71,5 @@ class Memoizator:
       return "fromPolish"
     elif interpretation == "fromPolish":
       return "toPolish"
+    else:
+      raise Exception("Bad interpretation set")
